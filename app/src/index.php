@@ -45,7 +45,11 @@ $request = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
 switch ( $request ) {
 	case '/store/v1/cart':
 		init_client();
-		require __DIR__ . '/store/v1/cart.php';
+		require __DIR__ . '/store/cart.php';
+		break;
+	case '/store/v1/products':
+		init_client();
+		require __DIR__ . '/store/products.php';
 		break;
 	case '/webhooks/products':
 		require __DIR__ . '/webhooks/products.php';
