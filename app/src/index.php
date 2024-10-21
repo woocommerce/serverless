@@ -54,4 +54,7 @@ switch ( $request ) {
 	case '/webhooks/products':
 		require __DIR__ . '/webhooks/products.php';
 		break;
+	default:
+		header( 'HTTP/1.1 404 Not Found' );
+		break;
 }
