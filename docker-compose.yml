@@ -1,0 +1,32 @@
+services:
+  wb.test:
+    build:
+      context: app
+    ports:
+      - "80:80"
+    volumes:
+      - "./app/src:/usr/src/public_html/src"
+    environment:
+      - valkey=wb.valkey.test
+      - search=wb.search.test:9200
+
+  wb.valkey.test:
+    build:
+      context: cache
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./valkey/src:/usr/src/public_html/src"
+    environment:
+      - HOST=$HOST
+
+  wb.search.test:
+    build:
+      context: search
+    ports:
+      - "9200:9200"
+    volumes:
+      - "./search/src:/usr/src/public_html/src"
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
