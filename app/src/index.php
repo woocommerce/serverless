@@ -5,9 +5,8 @@ global $redis;
 const WEBHOOK_NS = 'wh:';
 const CLIENT_SITE_NS = 'si:';
 
-$redis = new Redis();
 try {
-	$redis->connect( getenv( 'valkey' ) );
+	require_once __DIR__ . '/init-redis.php';
 } catch ( RedisException $e ) {
 	header( 'HTTP/1.1 500 Internal Server Error' );
 	exit;

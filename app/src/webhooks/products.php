@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '../es-request.php';
 
 if ( ! in_array( $_SERVER['REQUEST_METHOD'], array('POST', 'PUT', 'DELETE' ) ) ) {
 	header( 'HTTP/1.1 405 Method Not Allowed' );
@@ -99,25 +100,4 @@ foreach ( $product_keys as $product_key ) {
 	}
 }
 
-function index_product( $product_data, $site_info ) : array {
-	$method = isset( $product_data['id'] ) ? 'PUT' : 'POST';
-	$index_name = intval($site_info['id']);
-	$product_id = intval( $product_data['id'] );
-	$es_url = getenv( 'search' ) . "/{$index_name}/_doc";
-	$es_url = $method === 'PUT' ? "{$es_url}/{$product_id}" : $es_url;
-
-	$ch = curl_init();
-	curl_setopt( $ch, CURLOPT_URL, $es_url );
-	curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $product_data ) );
-	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch, CURLOPT_POST, 1);
-
-	$response = curl_exec( $ch );
-
-	curl_close( $ch );
-
-	return json_decode( $response, true );
-}
-
-$response = index_product( $product_data, $site_info );
+$response = es_index_document( $site_info, 'product', $product_data );
