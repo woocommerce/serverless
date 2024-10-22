@@ -1,0 +1,53 @@
+{
+  "mappings": {
+    "properties": {
+      "id": { "type": "integer" },
+      "name": { "type": "text" },
+      "slug": { "type": "text" },
+      "variation": { "type": "nested" },
+      "sku": { "type": "keyword" },
+      "summary": { "type": "text" },
+      "short_description": { "type": "text" },
+      "description": { "type": "text" },
+      "on_sale": { "type": "boolean" },
+      "prices": {
+        "properties": {
+          "currency_code": { "type": "keyword" },
+          "price": { "type": "float" },
+          "regular_price": { "type": "float" },
+          "sale_price": { "type": "float" },
+          "price_range": { "type": "float" },
+        }
+      },
+      "average_rating": { "type": "float" },
+      "review_count": { "type": "integer" },
+      "images": {
+        "properties": {
+          "id": { "type": "integer" },
+          "src": { "type": "keyword" },
+          "thumbnail": { "type": "keyword" },
+          "srcset": { "type": "keyword" },
+          "sizes": { "type": "keyword" },
+          "name": { "type": "keyword" },
+          "alt": { "type": "keyword" }
+        }
+      },
+      "has_options": { "type": "boolean" },
+      "is_purchasable": { "type": "boolean" },
+      "is_in_stock": { "type": "boolean" },
+      "low_stock_remaining": { "type": "integer" },
+      "add_to_cart": {
+        "properties": {
+          "text": { "type": "keyword" },
+          "description": { "type": "keyword" },
+        }
+      },
+      "public_meta_data": {
+        "properties": {
+          "key": { "type": "keyword" },
+          "value": { "type": "text" }
+        }
+      }
+    }
+  }
+}
