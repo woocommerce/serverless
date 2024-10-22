@@ -1,0 +1,13 @@
+{
+    "name": "woocommerce/woobase",
+    "description": "WooCommerce frontend as managed API service!",
+    "type": "project",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Vedanshu Jain",
+            "email": "vedanshu.jain.2012@gmail.com"
+        }
+    ],
+    "require": {}
+}
