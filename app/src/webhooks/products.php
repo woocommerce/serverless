@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '../es-request.php';
 
-if ( ! in_array( $_SERVER['REQUEST_METHOD'], array('POST', 'PUT', 'DELETE' ) ) ) {
+if ( ! in_array( $_SERVER['REQUEST_METHOD'], array( 'POST', 'PUT', 'DELETE' ), true ) ) {
 	header( 'HTTP/1.1 405 Method Not Allowed' );
 	exit;
 }

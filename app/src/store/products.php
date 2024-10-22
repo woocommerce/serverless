@@ -7,18 +7,18 @@ $site_id = $site_info['id'];
 $available_params = array(
 	'_fields',
 	'search',
-	'slug'
+	'slug',
 );
 
 $params = array();
-foreach( $available_params as $param ) {
+foreach ( $available_params as $param ) {
 	if ( isset( $_GET[ $param ] ) ) {
 		$params[ $param ] = $_GET[ $param ];
 	}
 }
 
-$query = generate_es_product_query( $params );
-$response = send_es_product_query( $query, $site_id, getenv('search') );
+$query    = generate_es_product_query( $params );
+$response = send_es_product_query( $query, $site_id, getenv( 'search' ) );
 
 if ( isset( $response['hits']['hits'] ) ) {
 	$products = array();
@@ -32,15 +32,15 @@ if ( isset( $response['hits']['hits'] ) ) {
 }
 
 
-function generate_es_product_query( array $params ) : array {
+function generate_es_product_query( array $params ): array {
 	$query = array( '_source' => false );
 
 	$matchers = array();
 
 	$matchers[] = array(
 		'term' => array(
-			'status' => 'publish'
-		)
+			'status' => 'publish',
+		),
 	);
 
 	$allowed_fields = array(
@@ -65,7 +65,7 @@ function generate_es_product_query( array $params ) : array {
 			exit;
 		}
 		$query['fields'] = array_intersect( $param_fields, $allowed_fields );
-		if ( ! in_array ( 'id', $query['fields'] ) ) {
+		if ( ! in_array( 'id', $query['fields'], true ) ) {
 			$query['fields'][] = 'id';
 		}
 	} else {
@@ -75,25 +75,25 @@ function generate_es_product_query( array $params ) : array {
 	if ( isset( $params['search'] ) ) {
 		$matchers[] = array(
 			'multi_match' => array(
-				'query' => $params['search'],
-				'fields' => array( 'name', 'description' )
-			)
+				'query'  => $params['search'],
+				'fields' => array( 'name', 'description' ),
+			),
 		);
 	}
 
 	if ( isset( $params['slug'] ) ) {
 		$matchers[] = array(
 			'term' => array(
-				'slug' => $params['slug']
-			)
+				'slug' => $params['slug'],
+			),
 		);
 	}
 
 	if ( count( $matchers ) > 1 ) {
 		$query['query'] = array(
 			'bool' => array(
-				'must' => $matchers
-			)
+				'must' => $matchers,
+			),
 		);
 	} else {
 		$query['query'] = $matchers[0];
@@ -102,16 +102,16 @@ function generate_es_product_query( array $params ) : array {
 	return $query;
 }
 
-function send_es_product_query( array $query, string $site_id, string $es_url ) : array {
+function send_es_product_query( array $query, string $site_id, string $es_url ): array {
 	$index_name = $site_id;
-	$es_url = $es_url . '/' . $index_name . '/_search';
+	$es_url     = $es_url . '/' . $index_name . '/_search';
 
 	$ch = curl_init();
 	curl_setopt( $ch, CURLOPT_URL, $es_url );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $query ) );
-	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+	curl_setopt( $ch, CURLOPT_HTTPHEADER, array( 'Content-Type:application/json' ) );
 	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	curl_setopt( $ch, CURLOPT_POST, 1);
+	curl_setopt( $ch, CURLOPT_POST, 1 );
 
 	$response = curl_exec( $ch );
 

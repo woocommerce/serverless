@@ -2,11 +2,11 @@
 
 global $redis;
 
-const WEBHOOK_NS = 'wh:';
+const WEBHOOK_NS     = 'wh:';
 const CLIENT_SITE_NS = 'si:';
 
 try {
-	require_once __DIR__ . '/init-redis.php';
+	include_once __DIR__ . '/init-redis.php';
 } catch ( RedisException $e ) {
 	header( 'HTTP/1.1 500 Internal Server Error' );
 	exit;
@@ -22,7 +22,7 @@ function init_client(): void {
 	}
 
 	ini_set( 'session.save_handler', 'redis' );
-	ini_set( 'session.save_path', 'tcp://' . getenv('valkey') . ':6379' );
+	ini_set( 'session.save_path', 'tcp://' . getenv( 'valkey' ) . ':6379' );
 	$site_info_json = $redis->get( CLIENT_SITE_NS . $_SERVER['HTTP_X_WB_CLIENT_SITE'] );
 
 	if ( ! $site_info_json ) {
@@ -36,7 +36,7 @@ function init_client(): void {
 		session_start();
 	}
 
-	header("Access-Control-Allow-Origin: {$site_info['url']}");
+	header( "Access-Control-Allow-Origin: {$site_info['url']}" );
 }
 
 $request = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
@@ -44,14 +44,14 @@ $request = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
 switch ( $request ) {
 	case '/store/v1/cart':
 		init_client();
-		require __DIR__ . '/store/cart.php';
+		include __DIR__ . '/store/cart.php';
 		break;
 	case '/store/v1/products':
 		init_client();
-		require __DIR__ . '/store/products.php';
+		include __DIR__ . '/store/products.php';
 		break;
 	case '/webhooks/products':
-		require __DIR__ . '/webhooks/products.php';
+		include __DIR__ . '/webhooks/products.php';
 		break;
 	default:
 		header( 'HTTP/1.1 404 Not Found' );
