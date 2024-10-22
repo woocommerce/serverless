@@ -1,5 +1,5 @@
 .idea
 cache/src/dump.rdb
 sample-requests.http
-
 /vendor/
+.phpunit.result.cache

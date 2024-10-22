@@ -10,7 +10,8 @@
         }
     ],
     "require-dev": {
-        "wp-coding-standards/wpcs": "^3.1"
+        "wp-coding-standards/wpcs": "^3.1",
+        "phpunit/phpunit": "^9"
     },
     "config": {
         "allow-plugins": {
