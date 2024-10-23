@@ -48,17 +48,21 @@ function init_client(): void {
 
 $request = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
 
-switch ( $request ) {
-	case '/store/v1/cart':
+switch ( true ) {
+	case $request === '/store/v1/cart':
 		init_client();
 		include __DIR__ . '/store/cart.php';
 		break;
-	case '/store/v1/products':
+	case $request === '/store/v1/products':
 		init_client();
 		include __DIR__ . '/store/products.php';
 		break;
-	case '/webhooks/products':
+	case $request === '/webhooks/products':
 		include __DIR__ . '/webhooks/products.php';
+		break;
+	case preg_match( "/^\/sites\/[0-9]+$/", $request ):
+	case $request === '/sites':
+		include __DIR__ . '/sites.php';
 		break;
 	default:
 		header( 'HTTP/1.1 404 Not Found' );
