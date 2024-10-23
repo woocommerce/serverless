@@ -2,8 +2,15 @@
 
 global $redis;
 
-const WEBHOOK_NS     = 'wh:';
-const CLIENT_SITE_NS = 'si:';
+if ( ! defined( 'WEBHOOK_NS' ) ) {
+	define( 'WEBHOOK_NS', 'wh:' );
+}
+if ( ! defined( 'CLIENT_SITE_NS' ) ) {
+	define( 'CLIENT_SITE_NS', 'si:' );
+}
+if ( ! defined( 'ES_URL' ) ) {
+	define( 'ES_URL', getenv( 'search' ) );
+}
 
 try {
 	include_once __DIR__ . '/init-redis.php';

@@ -18,7 +18,7 @@ foreach ( $available_params as $param ) {
 }
 
 $query    = generate_es_product_query( $params );
-$response = send_es_product_query( $query, $site_id, getenv( 'search' ) );
+$response = send_es_product_query( $query, $site_id, ES_URL );
 
 if ( isset( $response['hits']['hits'] ) ) {
 	$products = array();
