@@ -9,6 +9,7 @@ services:
     environment:
       - valkey=wb.valkey.test
       - search=wb.search.test:9200
+      - ADMIN_TOKEN=development
 
   wb.valkey.test:
     build:
