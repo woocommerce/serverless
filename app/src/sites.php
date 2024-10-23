@@ -39,7 +39,9 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 
 	echo 'Site info saved';
 } elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
-	$site_info_json = $redis->get( CLIENT_SITE_NS . $_GET['id'] );
+	$site_id = preg_match( '/^\/sites\/([0-9]+)$/', parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), $matches ) ? $matches[1] : null;
+
+	$site_info_json = $redis->get( CLIENT_SITE_NS . $site_id );
 	if ( ! $site_info_json ) {
 		header( 'HTTP/1.1 404 Not Found' );
 		exit;
