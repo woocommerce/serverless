@@ -43,7 +43,12 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	}
 
 	http_response_code( 201 );
-	echo json_encode( array( 'success' => true, 'message' => 'Site created' ) );
+	echo json_encode(
+		array(
+			'success' => true,
+			'message' => 'Site created',
+		)
+	);
 	exit;
 } elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
 	$site_id = preg_match( '/^\/sites\/([0-9a-zA-Z]+)$/', parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), $matches ) ? $matches[1] : null;

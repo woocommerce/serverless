@@ -60,7 +60,7 @@ switch ( true ) {
 	case $request === '/webhooks/products':
 		include __DIR__ . '/webhooks/products.php';
 		break;
-	case preg_match( "/^\/sites\/[0-9a-zA-Z]+$/", $request ):
+	case preg_match( '/^\/sites\/[0-9a-zA-Z]+$/', $request ):
 	case $request === '/sites':
 		include __DIR__ . '/sites.php';
 		break;

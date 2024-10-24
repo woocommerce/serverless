@@ -6,40 +6,40 @@ function get_index_name( array $site_info, string $document_type ): string {
 		array(
 			str_replace( ':', '_', CLIENT_SITE_NS ),
 			$site_info['id'],
-			$document_type
+			$document_type,
 		)
 	);
 }
 
-function es_index_document( array $site_info, string $document_type, array $document ) : array {
-	$es_url = ES_URL . "/" . get_index_name( $site_info, $document_type ) . "/_doc";
+function es_index_document( array $site_info, string $document_type, array $document ): array {
+	$es_url = ES_URL . '/' . get_index_name( $site_info, $document_type ) . '/_doc';
 	$ch     = es_get_curl_object();
 	curl_setopt( $ch, CURLOPT_URL, $es_url );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $document ) );
 
-	$response = curl_exec( $ch );
+	$response  = curl_exec( $ch );
 	$http_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 	curl_close( $ch );
 
 	return array(
-		'status' => $http_code,
+		'status'   => $http_code,
 		'response' => json_decode( $response, true ),
 	);
 }
 
-function es_map_index( array $site_info, string $document_type, array $mapping ) : array {
-	$es_url = ES_URL . "/" . get_index_name( $site_info, $document_type );
+function es_map_index( array $site_info, string $document_type, array $mapping ): array {
+	$es_url = ES_URL . '/' . get_index_name( $site_info, $document_type );
 	$ch     = es_get_curl_object();
 	curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'PUT' );
 	curl_setopt( $ch, CURLOPT_URL, $es_url );
 	curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $mapping ) );
 
-	$response = curl_exec( $ch );
+	$response  = curl_exec( $ch );
 	$http_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 	curl_close( $ch );
 
 	return array(
-		'status' => $http_code,
+		'status'   => $http_code,
 		'response' => json_decode( $response, true ),
 	);
 }
@@ -51,7 +51,7 @@ function es_get_curl_object(): CurlHandle {
 	return $ch;
 }
 
-function es_map_products( array $site_info ) : array {
+function es_map_products( array $site_info ): array {
 	$product_mapping = array(
 		'mappings' => array(
 			'properties' => array(
