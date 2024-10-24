@@ -17,7 +17,7 @@ services:
     build:
       context: app
     ports:
-      - "80:80"
+      - "81:80"
     volumes:
       - "./app:/usr/src/public_html/src"
     environment:
