@@ -15,7 +15,7 @@ COPY nginx.conf /etc/nginx/sites-enabled/default
 ADD start.sh /
 RUN chmod +x /start.sh
 
-WORKDIR /usr/src/public_html
+WORKDIR /usr/src/public_html/src
 
 # Start nginx.
 CMD ["/start.sh"]
