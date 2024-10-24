@@ -1,6 +1,11 @@
 <?php
 global $redis;
 
+if ( ! isset( $_GET['token'] ) ) {
+	header( 'HTTP/1.1 404 Not Found' );
+	exit;
+}
+
 $token = $_GET['token'];
 if ( $token !== getenv( 'ADMIN_TOKEN' ) ) {
 	header( 'HTTP/1.1 403 Forbidden' );
@@ -37,7 +42,9 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 		exit;
 	}
 
-	echo 'Site info saved';
+	http_response_code( 201 );
+	echo json_encode( array( 'success' => true, 'message' => 'Site created' ) );
+	exit;
 } elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
 	$site_id = preg_match( '/^\/sites\/([0-9]+)$/', parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), $matches ) ? $matches[1] : null;
 
