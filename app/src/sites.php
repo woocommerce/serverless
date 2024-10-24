@@ -46,7 +46,7 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' ) {
 	echo json_encode( array( 'success' => true, 'message' => 'Site created' ) );
 	exit;
 } elseif ( $_SERVER['REQUEST_METHOD'] === 'GET' ) {
-	$site_id = preg_match( '/^\/sites\/([0-9]+)$/', parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), $matches ) ? $matches[1] : null;
+	$site_id = preg_match( '/^\/sites\/([0-9a-zA-Z]+)$/', parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), $matches ) ? $matches[1] : null;
 
 	$site_info_json = $redis->get( CLIENT_SITE_NS . $site_id );
 	if ( ! $site_info_json ) {

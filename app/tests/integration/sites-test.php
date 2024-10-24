@@ -24,6 +24,27 @@ class SitesTest extends PHPUnit\Framework\TestCase {
 		$this->assertEquals( 'Site created', json_decode( $response->getBody()->getContents(), true )['message'] );
 	}
 
+	public function test_can_get_site_once_its_created() {
+		$site_info = $this->get_new_site_info();
+
+		$client = new GuzzleHttp\Client();
+		$response = $client->post(
+			get_test_api_domain() . '/sites?token=test',
+			array(
+				'json' => $site_info
+			)
+		);
+
+		$this->assertEquals( 201, $response->getStatusCode() );
+
+		$response_get = $client->get(
+			get_test_api_domain() . '/sites/' . $site_info['id'] . '?token=test'
+		);
+
+		$this->assertEquals( 200, $response_get->getStatusCode() );
+		$this->assertEquals( $site_info['url'], json_decode( $response_get->getBody()->getContents(), true )['url'] );
+	}
+
 	public function test_site_endpoint_is_not_available_without_token() {
 		$site_info = $this->get_new_site_info();
 
