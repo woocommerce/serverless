@@ -10,8 +10,8 @@ services:
       - valkey=wb.valkey.test
       - search=wb.search.test:9200
       - ADMIN_TOKEN=development
-      - CLIENT_NS="si_test:"
-      - WEBHOOK_NS="wh_test:"
+      - CLIENT_NS="si_dev:"
+      - WEBHOOK_NS="wh_dev:"
 
   wb.test:
     build:
