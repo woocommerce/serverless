@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<phpunit bootstrap="app/tests/bootstrap.php">
+<phpunit bootstrap="app/tests/bootstrap.php" backupStaticProperties="true">
     <testsuites>
-        <testsuite name="WooBase">
+        <testsuite name="Serverless">
             <directory>app/tests</directory>
         </testsuite>
     </testsuites>
