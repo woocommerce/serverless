@@ -1,15 +1,31 @@
 services:
+  wb.dev:
+    build:
+      context: app
+    ports:
+      - "80:80"
+    volumes:
+      - "./app:/usr/src/public_html/src"
+    environment:
+      - valkey=wb.valkey.test
+      - search=wb.search.test:9200
+      - ADMIN_TOKEN=development
+      - CLIENT_NS="si_test:"
+      - WEBHOOK_NS="wh_test:"
+
   wb.test:
     build:
       context: app
     ports:
       - "80:80"
     volumes:
-      - "./app/src:/usr/src/public_html/src"
+      - "./app:/usr/src/public_html/src"
     environment:
-      - valkey=wb.valkey.test
-      - search=wb.search.test:9200
-      - ADMIN_TOKEN=development
+        - valkey=wb.valkey.test
+        - search=wb.search.test:9200
+        - ADMIN_TOKEN=test
+        - CLIENT_NS="si_test:"
+        - WEBHOOK_NS="wh_test:"
 
   wb.valkey.test:
     build:
@@ -18,8 +34,6 @@ services:
       - "6379:6379"
     volumes:
       - "./cache/src:/usr/src/public_html/src"
-    environment:
-      - HOST=$HOST
 
   wb.search.test:
     build:
