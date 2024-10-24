@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
-<phpunit bootstrap="app/tests/bootstrap.php" backupStaticProperties="true">
+<phpunit bootstrap="app/tests/bootstrap.php">
     <testsuites>
         <testsuite name="Serverless">
-            <directory>app/tests</directory>
+            <directory suffix="test.php">app/tests</directory>
         </testsuite>
     </testsuites>
 </phpunit>
