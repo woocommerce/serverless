@@ -3,10 +3,10 @@
 global $redis;
 
 if ( ! defined( 'WEBHOOK_NS' ) ) {
-	define( 'WEBHOOK_NS', 'wh:' );
+	define( 'WEBHOOK_NS', getenv( 'WEBHOOK_NS' ) );
 }
 if ( ! defined( 'CLIENT_SITE_NS' ) ) {
-	define( 'CLIENT_SITE_NS', 'si:' );
+	define( 'CLIENT_SITE_NS', getenv( 'CLIENT_NS' ) );
 }
 if ( ! defined( 'ES_URL' ) ) {
 	define( 'ES_URL', getenv( 'search' ) );
