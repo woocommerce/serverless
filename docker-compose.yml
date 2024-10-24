@@ -5,13 +5,13 @@ services:
     ports:
       - "80:80"
     volumes:
-      - "./app:/usr/src/public_html/src"
+      - "./app/src:/usr/src/public_html/src"
     environment:
       - valkey=wb.valkey.test
       - search=wb.search.test:9200
       - ADMIN_TOKEN=development
-      - CLIENT_NS="si_dev:"
-      - WEBHOOK_NS="wh_dev:"
+      - CLIENT_NS=si_dev
+      - WEBHOOK_NS=wh_dev
 
   wb.test:
     build:
@@ -19,13 +19,13 @@ services:
     ports:
       - "81:80"
     volumes:
-      - "./app:/usr/src/public_html/src"
+      - "./app/src:/usr/src/public_html/src"
     environment:
         - valkey=wb.valkey.test
         - search=wb.search.test:9200
         - ADMIN_TOKEN=test
-        - CLIENT_NS="si_test:"
-        - WEBHOOK_NS="wh_test:"
+        - CLIENT_NS=si_test
+        - WEBHOOK_NS=wh_test
 
   wb.valkey.test:
     build:
